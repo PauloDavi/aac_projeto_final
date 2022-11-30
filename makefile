@@ -1,5 +1,9 @@
+GENERTIONS=10
+POULATION_SIZE=100
+VERBOSE=false
+
 run: main.o
-	./main.o 10 100 false
+	./main.o $(GENERTIONS) $(POULATION_SIZE) $(VERBOSE)
 
 main.o: main.cpp
 	g++ main.cpp -o main.o
