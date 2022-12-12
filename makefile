@@ -1,9 +1,19 @@
-GENERTIONS=10
-POULATION_SIZE=100
-VERBOSE=false
+CC = g++
+CUCOMP = nvcc
+CUFLAGS = -arch=native
 
-run: main.o
-	./main.o $(GENERTIONS) $(POULATION_SIZE) $(VERBOSE)
+run:
+	./test.sh
 
-main.o: main.cpp
-	g++ main.cpp -o main.o
+compile_single: main.cpp
+	$(CC) main.cpp -o main.o
+
+run_single: compile_single
+	multitime -n 5 ./main.o $(ARGS) false
+
+## CUDA
+compile_cuda: main.cu
+	$(CUCOMP) $(CUFLAGS) main.cu -o main.o -lcurand
+
+run_cuda: compile_cuda
+	multitime -n 5 ./main.o $(ARGS)
